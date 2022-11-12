@@ -304,4 +304,13 @@ multiApp f gs x = f (map ($ x) gs)
 -- function, the surprise won't work.
 
 interpreter :: [String] -> [String]
-interpreter commands = todo
+interpreter = interpreter' 0 0
+
+interpreter' :: Int -> Int -> [String] -> [String]
+interpreter' _ _ [] = []
+interpreter' x y ("up":is) = interpreter' x (y+1) is
+interpreter' x y ("down":is) = interpreter' x (y-1) is
+interpreter' x y ("left":is) = interpreter' (x-1) y is
+interpreter' x y ("right":is) = interpreter' (x+1) y is
+interpreter' x y ("printY":is) = show y : interpreter' x y is
+interpreter' x y ("printX":is) = show x : interpreter' x y is
